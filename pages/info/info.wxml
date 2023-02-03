@@ -1,0 +1,34 @@
+<view class="cu-card case">
+  <view class="cu-item shadow">
+    <view class="image">
+      <swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+        <swiper-item wx:for="{{markerInfo.imageList}}" wx:key='item' bindtap='clickImg' data-url="{{item}}">
+          <image src="{{item}}" mode="aspectFit"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view class="padding-sm">
+      <view class="text-center text-lg">{{markerInfo.callout.content}}</view>
+      <view class="text-center">{{markerInfo.name}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-card">
+  <view class="cu-item shadow padding-xl" style="margin-top:0;">
+    <view class="text-content">
+      {{markerInfo.desc}}
+    </view>
+    <view class="content">
+      <view class="bg-grey padding-sm radius margin-top-sm">
+        {{markerInfo.comment}}
+      </view>
+    </view>
+    <view class="text-content" wx:for="{{wordList}}" wx:key="index" bindtap="jump" data-id="{{item.id}}">
+      <view class="content">
+        <text class="cuIcon-link text-blue" style="margin-right: 5rpx;"></text>
+        <text class="text-grey">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+</view>
