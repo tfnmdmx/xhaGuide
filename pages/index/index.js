@@ -6,6 +6,7 @@ var animation = wx.createAnimation({
   duration: 1000,
   timingFunction: 'ease',
 })
+
 Page({
   data: {
     latitude: 35.772700,
@@ -29,28 +30,37 @@ Page({
     scale: 14, //定位
     modalName: '', //关于
 
-    notices: 0, //已读公告的个数
+    noticesRead: 0, //已读公告的个数
     noticesCount: allNotices.allNotices.length, //全部公告的个数
 
     sideAni: {},
   },
-  onReady() {
+  onLoad: function () {
     animation.translateY(500).step()
+    console.log('_500')
     this.setData({
       sideAni: animation.export()
     })
     var that = this
     wx.getStorage({
-      key: 'notices',
+      key: 'noticesRead',
       success(res) {
         that.setData({
-          notices: res.data
+          noticesRead: res.data
         })
+        console.log('getStorage ', that.data.noticesRead)
       }
     })
-  },
-  onLoad: function () {
+
     this.data.mapCtx = wx.createMapContext('map')
+    this.data.mapCtx.initMarkerCluster({
+      enableDefaultStyle:true,//启用默认的聚合样式
+      zoomOnClick:false,//点击已经聚合的标记点时是否实现聚合分离，点击后，标记点出现在屏幕边缘
+      gridSize:60,//聚合算法的可聚合距离
+      complete(res){
+        console.log('initMarkerCluster',res)
+      }
+    })
     this.data.mapCtx.addGroundOverlay({
       id: 0,
       src: "https://s1.ax1x.com/2023/02/03/pSsrXZT.jpg",//路过图床，原图经过_bigjpg_降噪
@@ -180,7 +190,7 @@ Page({
       })
       if (!this.data.bar1) { //隐藏文字
         wx.showToast({
-          title: '隐藏文字',
+          title: '点击显示',
           icon: 'none'
         })
         for (const i of this.data.allMarkers) {
@@ -195,7 +205,7 @@ Page({
         })
       } else { //显示文字
         wx.showToast({
-          title: '显示文字',
+          title: '文字常显',
           icon: 'none'
         })
         for (const i of this.data.allMarkers) {
@@ -215,8 +225,10 @@ Page({
       })
       if (this.data.bar2) {
         animation.translateY(0).step()
+        console.log('0')
       } else {
         animation.translateY(500).step()
+        console.log('500')
       }
       this.setData({
         sideAni: animation.export(),
@@ -226,7 +238,7 @@ Page({
         url: '/pages/notice/notice',
       })
       this.setData({
-        notices: this.data.noticesCount
+        noticesRead: this.data.noticesCount
       })
 
     } else if (id == 4) { //关于
@@ -302,34 +314,10 @@ Page({
       url: '/pages/info/info?markerId=' + e.detail.markerId,
     })
   },
-  clickImg: function (e) {
-    wx.previewImage({
-      current: 'https://img-blog.csdnimg.cn/a8ff7ae196064b22be354978de8c2c4b.png', // 当前显示图片的http链接
-      urls: ['https://img-blog.csdnimg.cn/a8ff7ae196064b22be354978de8c2c4b.png'], // 需要预览的图片http链接列表，注意是数组
-      fail: function (err) {
-        console.log('放大图片失败', err)
-        wx.showToast({
-          title: '放大图片失败',
-          icon: 'none'
-        })
-      },
-    })
-  },
   wd() {
     wx.navigateTo({
       url: '/pages/word/word',
     })
-    // wx.openDocument({
-    //   filePath: '/other/x1.docx',
-    //   fileType: 'docx',
-    //   fail: function (err) {
-    //     wx.showToast({
-    //       title: '打开失败',
-    //       icon: 'error'
-    //     })
-    //     console.log('打开失败：', err)
-    //   }
-    // })
   },
 /* 关于侧边栏，点击跳转 */
   jump(event) {

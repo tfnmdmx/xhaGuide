@@ -3,7 +3,7 @@
     <view class="cu-time">{{item.time}}</view>
     <view class="cu-item {{item.text}}">
       <view class="{{item.bg}} content">
-        <text decode='true'>{{item.content}}</text>
+        <text decode='true' selectable='true'>{{item.content}}</text>
       </view>
     </view>
   </view>

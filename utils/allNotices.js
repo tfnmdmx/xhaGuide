@@ -1,5 +1,5 @@
 var allNotices = [{
-  content: '代码已开源：',
+  content: '代码已开源：https://github.com/tfnmdmx/xhaGuide',
   time: '2-3',
   bg: '',
   text: '',

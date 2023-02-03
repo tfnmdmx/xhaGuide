@@ -866,6 +866,7 @@ var allMarkers_sameSetting = {
   display: 'BYCLICK'
 }
 for (const i of allMarkers) {
+  i.joinCluster = true
   i.callout = {
     ...i.callout,
     ...allMarkers_sameSetting

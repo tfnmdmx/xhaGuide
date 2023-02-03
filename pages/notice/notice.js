@@ -8,7 +8,7 @@ Page({
     console.log('allNotices', this.data.allNotices.length)
     
     wx.setStorage({
-      key: "notices",
+      key: "noticesRead",
       data: this.data.allNotices.length
     })
   },
